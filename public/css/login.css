@@ -1,0 +1,10 @@
+.contenedor {
+    background: url("/img/fondo4.jpg");
+    background-size: 100%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    margin: 0;
+    height: 92vh;
+}
+
+
