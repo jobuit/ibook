@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//Busca alimentos de la base de datos
+Route::get('buscarLibros', 'HomeController@buscarLibros')->name('buscarLibros');

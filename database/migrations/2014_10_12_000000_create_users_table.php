@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('account');
             $table->string('address');
+            $table->integer('num_reservas');
             $table->string('phone_number');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
