@@ -23,6 +23,7 @@ class CreateBooksTable extends Migration
             $table->string('imagen');
             $table->double('valoracion');
             $table->integer('cantidad');
+            $table->integer('precio');
             $table->timestamps();
         });
     }

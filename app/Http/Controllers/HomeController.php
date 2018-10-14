@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Books;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -31,15 +32,20 @@ class HomeController extends Controller
     public function buscarLibros(Request $request)	{
 
         $buscar=$request->input('buscar');
-        \Log::warning($buscar);
 
         if($buscar!=''){
             $data = Books::where('titulo', 'LIKE', '%'. $buscar .'%')
                 ->orWhere('tema', 'LIKE', '%'. $buscar .'%')
-                ->orWhere('autor_id', 'LIKE', '%'. $buscar .'%')
+                ->join('autores','books.autor_id','=','autores.id')
+                ->orWhere('autores.nombre', 'LIKE', '%'. $buscar .'%')
+                ->select('books.id','books.titulo','books.imagen','books.tema','books.cantidad','books.valoracion','books.descripcion','books.precio','autores.nombre')
                 ->get();
         }else{
-            $data = Books::all();
+            $data = DB::table('books')
+                ->join('autores','books.autor_id','=','autores.id')
+                ->select('books.id','books.titulo','books.imagen','books.tema','books.cantidad','books.valoracion','books.descripcion','books.precio','autores.nombre')
+                ->get();
+
         }
 
         return ($data);
