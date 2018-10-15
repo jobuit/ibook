@@ -42,5 +42,7 @@ class ReservasController extends Controller
 
         Reservas::find($idReserva)->delete();
 
+        return $idReserva;
+
     }
 }

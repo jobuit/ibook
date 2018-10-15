@@ -29,3 +29,5 @@ Route::get('reservas', 'ReservasController@index')->name('reservas');
 Route::get('buscarAlquilados', 'ReservasController@buscarAlquilados')->name('buscarAlquilados');
 Route::get('retornarLibro', 'ReservasController@retornarLibro')->name('retornarLibro');
 Route::get('buscarAutor', 'HomeController@buscarAutor')->name('buscarAutor');
+Route::get('eliminarLibro', 'HomeController@eliminarLibro')->name('eliminarLibro');
+Route::post('updateLibro', 'HomeController@updateLibro')->name('updateLibro');

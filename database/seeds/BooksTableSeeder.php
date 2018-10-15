@@ -32,7 +32,7 @@ class BooksTableSeeder extends Seeder
                 'imagen' => '/img/libros/libro'.$i.'.jpeg',
                 'valoracion' => random_int(0,10),
                 'cantidad' => random_int(0, 50),
-                'precio' => random_int(20000, 95000),
+                'precio' => random_int(20000, 55000),
             ]);
         }
     }

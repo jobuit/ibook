@@ -137,7 +137,7 @@
 
                         for (var i = 0; i < response.length; i++) {
 
-                            newRows += "<div class='col m-2' style='max-width: 270px;'><div class='card'>" +
+                            newRows += "<div id='book"+response[i].id+"' class='col m-2' style='max-width: 270px;'><div class='card'>" +
                                 "<div class='input-group text-center' ><small class='mr-2 text-center' style='width: 100%;'>Fecha de reserva: "+response[i].created_at+"</small></div>"+
                                 "<div class='input-group'><small class='mr-2 text-center' style='width: 100%;'>Fecha de entrega: "+response[i].fecha_entrega+"</small></div>";
 

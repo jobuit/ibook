@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
 {
@@ -42,17 +43,45 @@ class HomeController extends Controller
                 ->orWhere('tema', 'LIKE', '%'. $buscar .'%')
                 ->join('autores','books.autor_id','=','autores.id')
                 ->orWhere('autores.nombre', 'LIKE', '%'. $buscar .'%')
-                ->select('books.id','books.titulo','books.imagen','books.tema','books.cantidad','books.valoracion','books.descripcion','books.precio','autores.nombre')
+                ->select('books.id','books.autor_id','books.titulo','books.imagen','books.tema','books.cantidad','books.valoracion','books.descripcion','books.precio','autores.nombre')
                 ->get();
         }else{
             $data = DB::table('books')
                 ->join('autores','books.autor_id','=','autores.id')
-                ->select('books.id','books.titulo','books.imagen','books.tema','books.cantidad','books.valoracion','books.descripcion','books.precio','autores.nombre')
+                ->select('books.id','books.autor_id','books.titulo','books.imagen','books.tema','books.cantidad','books.valoracion','books.descripcion','books.precio','autores.nombre')
                 ->get();
 
         }
 
         return ($data);
+    }
+
+    public function updateLibro(Request $request)	{
+
+        if($request->input('idLibroModalEditar')!=""){
+            $book = Books::find($request->input('idLibroModalEditar'));
+        }else{
+            $book = new Books();
+            $book->valoracion="0";
+
+            $img=$request->file('imgLibro');
+            $destinationPath=public_path('/img/libros');
+            $img->move($destinationPath,$img->getClientOriginalName());
+
+            $book->imagen="/img/libros/".$img->getClientOriginalName();
+        }
+
+        $book->autor_id = $request->input('idAutorModalEditar');
+        $book->titulo = $request->input('tituloModalEditar');
+        $book->descripcion = $request->input('descripcionModalEditar');
+        $book->tema = $request->input('temaModalEditar');
+        $book->cantidad = $request->input('cantidadModalEditar');
+        $book->precio = $request->input('precioModalEditar');
+
+        $book->save();
+
+        return Redirect::back();
+
     }
 
     public function buscarAutor(Request $request)	{
@@ -67,6 +96,13 @@ class HomeController extends Controller
         }
 
         return null;
+    }
+
+    public function eliminarLibro(Request $request)	{
+
+        $id = $request->input('idBook');
+        Books::find($id)->delete();
+        return $id;
     }
 
     public function alquilarLibro(Request $request){
