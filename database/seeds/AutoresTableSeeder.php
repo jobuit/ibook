@@ -13,8 +13,8 @@ class AutoresTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
-        for($i = 0; $i < 30; $i++) {
-            $name=$faker->userName;
+        for($i = 1; $i < 31; $i++) {
+            $name=$faker->name;
             try {
                 Autores::create([
                     'nombre' => $name,

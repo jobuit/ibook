@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Autores;
 use App\Books;
+use App\Reservas;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -50,4 +54,38 @@ class HomeController extends Controller
 
         return ($data);
     }
+
+    public function buscarAutor(Request $request)	{
+
+        $autor=$request->input('nomAutor');
+
+        if($autor!=''){
+            $data = Autores::where('nombre', '=', $autor)
+                ->select('descripcion','imagen','telefono','correo','valoracion')
+                ->get();
+            return ($data);
+        }
+
+        return null;
+    }
+
+    public function alquilarLibro(Request $request){
+
+        $idUser=$request->input('idUser');
+        $idBook=$request->input('idBook');
+        $fechaEntrega=$request->input('fechaEntrega');
+        $fechaRecibida=$request->input('fechaRecibida');
+
+        Reservas::create([
+            'book_id' => $idBook,
+            'user_id' => $idUser,
+            'fecha_recogeran' => $fechaEntrega,
+            'fecha_entrega' => $fechaRecibida,
+        ]);
+
+        User::whereId($idUser)->increment('num_reservas', 1);
+        Books::whereId($idBook)->decrement('cantidad', 1);
+    }
 }
+
+

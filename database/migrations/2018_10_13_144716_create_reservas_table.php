@@ -22,8 +22,6 @@ class CreateReservasTable extends Migration
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->string('fecha');
-            $table->string('hora');
             $table->string('fecha_recogeran');
             $table->string('fecha_entrega');
 
